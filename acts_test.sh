@@ -7,8 +7,9 @@ source /afs/cern.ch/user/p/pibutti/sw/acts/build/this_acts.sh
 source /afs/cern.ch/user/p/pibutti/sw/acts/build/python/setup.sh
 
 NEVENTS=$1
-CLUSTER_ID=$2
-PROC_ID=$3
+PILEUP=$2
+CLUSTER_ID=$3
+PROC_ID=$4
 OUTDIR=odd_run_${CLUSTER_ID}_${PROC_ID}
 
 # The random engine generator of acts will create a random number with seed = config.seed + eventNumber. 
@@ -19,7 +20,7 @@ mkdir $OUTDIR
 cd $OUTDIR
 
 #### THE JOB ####
-python3 /afs/cern.ch/user/p/pibutti/sw/acts/Examples/Scripts/Python/jets_chain.py --ttbar --events $NEVENTS --seed $SEED
+python /afs/cern.ch/user/p/pibutti/sw/acts/Examples/Scripts/Python/jets_chain.py --ttbar --events $NEVENTS --seed $SEED --pileup $PILEUP
 
 cd ..
 
