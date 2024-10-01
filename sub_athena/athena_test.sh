@@ -26,6 +26,7 @@ NTHREADS=4
 ATHENA_CORE_NUMBER=${NTHREADS}
 OUTDIR=athena_seeding_ttbar_fastTracking_${n_events}
 
+mkdir $OUTDIR
 cd $OUTDIR
 
 #### THE JOB ####
