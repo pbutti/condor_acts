@@ -1,4 +1,4 @@
-executable            = /eos/home-p/pibutti/sw/condor_acts/sub_athena/athena_test.sh
+executable            = /afs/cern.ch/user/p/pibutti/sw/condor_helpers/sub_athena/athena_test.sh
 arguments             = 1 2 $(ClusterId) $(ProcId)
 output                = athena_test.$(ClusterId).$(ProcId).out
 error                 = athena_test.$(ClusterId).$(ProcId).err
