@@ -1,0 +1,15 @@
+executable            = /afs/cern.ch/user/p/pibutti/sw/condor_helpers/sub_athena/athena_inputfile.sh
+arguments             = $(file) $(ClusterId) $(ProcId)        # pass each file as an argument to the script
+output                = athena_test.$(ClusterId).$(ProcId).out
+error                 = athena_test.$(ClusterId).$(ProcId).err
+log                   = athena_test.$(ClusterId).$(ProcId).log
+request_cpus   = 1
+request_memory = 1024
+request_disk   = 10240
+
++JobFlavour = "longlunch"
+
+should_transfer_files = yes
+queue file from ./mc21_14TeV.601229.PhPy8EG_A14_ttbar_hdamp258p75_SingleLep.recon.RDO.e8481_s4149_r14700/list.txt
+
+
