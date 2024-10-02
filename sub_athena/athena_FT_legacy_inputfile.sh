@@ -21,9 +21,10 @@ cd $localDir
 
 #Take from input
 input_rdo=$1
-clusterId=$2
-procId=$3
-n_events=3
+n_events=$2
+clusterId=$3
+procId=$4
+
 
 NTHREADS=4
 ATHENA_CORE_NUMBER=${NTHREADS}
