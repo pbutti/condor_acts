@@ -10,7 +10,8 @@ source ${ATLAS_LOCAL_ROOT_BASE}/user/atlasLocalSetup.sh
 
 #setup local version
 cd /eos/home-p/pibutti/sw/athena/
-asetup main,latest,Athena
+#asetup main,latest,Athena
+asetup main,2024-10-09T2101,Athena
 cd /eos/home-p/pibutti/sw/build
 source x86_64-el9-gcc13-opt/setup.sh
 
@@ -21,13 +22,15 @@ cd $localDir
 
 #Take from input
 input_rdo=$1
-clusterId=$2
-procId=$3
-n_events=5
+n_events=$2
+clusterId=$3
+procId=$4
+name=$5
+
 
 NTHREADS=1
 ATHENA_CORE_NUMBER=${NTHREADS}
-OUTDIR=athena_seeding_ttbar_FT_inputFile_${clusterId}_${procId}
+OUTDIR=athena_seeding_ttbar_FT_acts_${clusterId}_${procId}_${name}
 
 mkdir $OUTDIR
 cd $OUTDIR

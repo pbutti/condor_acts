@@ -1,6 +1,4 @@
 #!/bin/bash
-
-
 localDir=$PWD
 
 #setup the eos transfer
@@ -20,7 +18,7 @@ source x86_64-el9-gcc13-opt/setup.sh
 cd $localDir
 
 input_rdo=/cvmfs/atlas-nightlies.cern.ch/repo/data/data-art/PhaseIIUpgrade/RDO/ATLAS-P2-RUN4-03-00-00/mc21_14TeV.601229.PhPy8EG_A14_ttbar_hdamp258p75_SingleLep.recon.RDO.e8481_s4149_r14700/RDO.33629020._000047.pool.root.1
-n_events=10
+n_events=1000
 
 NTHREADS=4
 ATHENA_CORE_NUMBER=${NTHREADS}
@@ -44,7 +42,7 @@ cd ..
 
 
 # staging out
-#eos cp -r $OUTDIR /eos/user/p/pibutti/batch_athena
+eos cp -r $OUTDIR /eos/user/p/pibutti/batch_athena
 
 
 # for staging out a directory

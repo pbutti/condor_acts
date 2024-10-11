@@ -29,6 +29,7 @@ procId=$4
 NTHREADS=4
 ATHENA_CORE_NUMBER=${NTHREADS}
 OUTDIR=athena_seeding_ttbar_FT_legacy_inputFile_${clusterId}_${procId}
+echo "Creating..." $OUTDIR
 
 mkdir $OUTDIR
 cd $OUTDIR
