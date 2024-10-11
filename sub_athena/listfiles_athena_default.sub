@@ -1,0 +1,15 @@
+executable            = /afs/cern.ch/user/p/pibutti/sw/condor_helpers/sub_athena/athena_FT_legacy_inputfile.sh
+arguments             = $(file) 500 $(ClusterId) $(ProcId)        
+output                = /afs/cern.ch/user/p/pibutti/sw/condor_helpers/sub_athena/logs/athena_test.$(ClusterId).$(ProcId).out
+error                 = /afs/cern.ch/user/p/pibutti/sw/condor_helpers/sub_athena/logs/athena_test.$(ClusterId).$(ProcId).err
+log                   = /afs/cern.ch/user/p/pibutti/sw/condor_helpers/sub_athena/logs/athena_test.$(ClusterId).$(ProcId).log
+request_cpus   = 4
+#request_memory = 8096
+#request_disk   = 20480
+
++JobFlavour = "workday"
+
+should_transfer_files = yes
+queue file from ./mc21_14TeV.601229.PhPy8EG_A14_ttbar_hdamp258p75_SingleLep.recon.RDO.e8481_s4149_r14700/list.txt
+
+
