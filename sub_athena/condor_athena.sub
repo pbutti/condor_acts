@@ -1,0 +1,16 @@
+executable            = /afs/cern.ch/user/p/pibutti/sw/condor_helpers/sub_athena/athena_acts_workflow_inputfile_techEff.sh
+arguments             = $(file) 1000 $(ClusterId) $(ProcId) ActsAloneFastTracking_SingleMu_TechEff_keepEdgeHoles_noAmbi
+output                = /afs/cern.ch/user/p/pibutti/sw/condor_helpers/sub_athena/logs/athena_test.$(ClusterId).$(ProcId).out
+error                 = /afs/cern.ch/user/p/pibutti/sw/condor_helpers/sub_athena/logs/athena_test.$(ClusterId).$(ProcId).err
+log                   = /afs/cern.ch/user/p/pibutti/sw/condor_helpers/sub_athena/logs/athena_test.$(ClusterId).$(ProcId).log
+request_cpus   = 4
+#request_memory = 1024
+#request_disk   = 10240
+
++JobFlavour = "longlunch"
+
+should_transfer_files = yes
+
+queue file from ./mc21_14TeV.900495.PG_single_muonpm_Pt10_etaFlatnp0_43.recon.RDO.e8557_s4422_r16128/list.txt
+
+#queue file from ./mc21_14TeV.601229.PhPy8EG_A14_ttbar_hdamp258p75_SingleLep.recon.RDO.e8481_s4149_r14701/list.txt
