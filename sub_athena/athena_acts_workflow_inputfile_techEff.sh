@@ -8,18 +8,11 @@ export EOS_MGM_URL=root://eosuser.cern.ch
 export ATLAS_LOCAL_ROOT_BASE=/cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase
 source ${ATLAS_LOCAL_ROOT_BASE}/user/atlasLocalSetup.sh
 
-#setup local version
-#cd /eos/home-p/pibutti/sw/dev/athena/
-#asetup main,latest,Athena
-#cd /eos/home-p/pibutti/sw/dev/build
-#source x86_64-el9-gcc13-opt/setup.sh
-
 #setup custom version
-cd /eos/home-p/pibutti/sw/acts-athena-ci/athena/
+cd /eos/home-p/pibutti/sw/dev/athena/
 asetup main,latest,Athena
-cd /eos/home-p/pibutti/sw/acts-athena-ci/ath_build/athena-build/
+cd /eos/home-p/pibutti/sw/dev/build
 source x86_64-el9-gcc13-opt/setup.sh
-
 
 #go back to node local directory
 cd $localDir
@@ -43,45 +36,31 @@ cd $OUTDIR
 outFile=AOD.acts.pool.${clusterId}.${procId}.root
 outFileIDPVM=idpvm.acts.${clusterId}.${procId}.root
 
-#### THE JOB  -  TECHNICAL EFFICIENCIES ####
-#Reco_tf.py \
-#     --inputRDOFile  ${input_rdo} \
-#     --outputAODFile ${outFile} \
-#     --preInclude "InDetConfig.ConfigurationHelpers.OnlyTrackingPreInclude,ActsConfig.ActsCIFlags.actsAloneFastWorkflowFlags" \
-#     --preExec 'flags.Tracking.doTruth=True;  \
-#     flags.Tracking.writeExtendedSi_PRDInfo=True;' \
-#     --maxEvents ${n_events} \
-#     --multithreaded 'True'
-
-
 #### THE JOB  -  SEEDS and TECHNICAL EFFICIENCIES ####
 
 Reco_tf.py \
      --inputRDOFile  ${input_rdo} \
      --outputAODFile ${outFile} \
-     --preInclude "InDetConfig.ConfigurationHelpers.OnlyTrackingPreInclude,ActsConfig.ActsCIFlags.actsAloneFastWorkflowFlags" \
+     --preInclude "InDetConfig.ConfigurationHelpers.OnlyTrackingPreInclude,ActsConfig.ActsCIFlags.actsFastWorkflowFlags" \
      --preExec 'flags.Tracking.doTruth=True;  \
      flags.Tracking.writeExtendedSi_PRDInfo=True; \
-     flags.Tracking.doStoreTrackSeeds=False; \
-     flags.Tracking.ITkActsFastPass.storeTrackSeeds=False; '\
+     flags.Tracking.doStoreTrackSeeds=True; \
+     flags.Tracking.ITkActsFastPass.storeTrackSeeds=True;'\
      --maxEvents ${n_events} \
      --multithreaded 'True'
 
 ## Follow with IDPVM
-runIDPVM.py     --filesInput ${outFile}     --outputFile ${outFileIDPVM}     --doExpertPlots  --OnlyTrackingPreInclude --doTechnicalEfficiency  --doDuplicate
-#--validateExtraTrackCollections "SiSPSeedSegmentsTrackParticles" --doTechnicalEfficiency
+runIDPVM.py     --filesInput ${outFile}     --outputFile ${outFileIDPVM}     --doExpertPlots  --OnlyTrackingPreInclude --doTechnicalEfficiency  --doDuplicate --validateExtraTrackCollections "SiSPSeedSegmentsActsFastPixelTrackParticles" --doTechnicalEfficiency
 
 #outFileIDPVM=idpvm.acts.${clusterId}.${procId}_seeds.root
 
 #runIDPVM.py     --filesInput ${outFile}     --outputFile ${outFileIDPVM}     --doExpertPlots  --OnlyTrackingPreInclude --doTechnicalEfficiency --validateExtraTrackCollections "SiSPSeedSegmentsActsFastPixelTrackParticles" --doDuplicate
 
 
-
 ## Remove the xAOD
 rm -rf ${outFile}
 
 cd ..
-
 
 # staging out
 eos cp -r $OUTDIR /eos/user/p/pibutti/batch_athena/
