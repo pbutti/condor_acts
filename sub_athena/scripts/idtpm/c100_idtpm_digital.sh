@@ -36,7 +36,6 @@ cd $OUTDIR
 outFile=AOD.acts.pool.${clusterId}.${procId}.root
 outFileIDPVM=idpvm.acts.${clusterId}.${procId}.root
 outFileIDPVM_truthPt2=idpvm.acts.${clusterId}.${procId}.__truthPt2__.root
-idtpm_config_file=IDTPMconfig_forPFSlim_muons.json
 
 #### THE JOB  -  SEEDS and TECHNICAL EFFICIENCIES ####
 
@@ -48,8 +47,7 @@ Reco_tf.py \
      --preExec 'flags.Tracking.doTruth=True;  \
      flags.Tracking.doStoreTrackSeeds=True; \
      flags.Tracking.ITkActsPass.storeTrackSeeds=True; \
-     flags.Tracking.doPixelDigitalClustering=False;'\
-     --postExec 'cfg.getEventAlgo("ActsPixelClusterizationAlg").ClusteringTool.UseBroadErrors=True' \
+     flags.Tracking.doPixelDigitalClustering=True;'\
      --maxEvents ${n_events} \
      --multithreaded 'True'
 
@@ -58,10 +56,12 @@ Reco_tf.py \
 runIDPVM.py     --filesInput ${outFile}     --outputFile ${outFileIDPVM}     --doExpertPlots  --OnlyTrackingPreInclude --doTechnicalEfficiency  --doDuplicate --validateExtraTrackCollections "SiSPSeedSegmentsActsPixelTrackParticles" 
 
 ## Follow with IDPVM
-#runIDPVM.py     --filesInput ${outFile}     --outputFile ${outFileIDPVM_truthPt2}     --doExpertPlots  --OnlyTrackingPreInclude --doTechnicalEfficiency  --doDuplicate --validateExtraTrackCollections "SiSPSeedSegmentsActsPixelTrackParticles" --truthMinPt 2000
+runIDPVM.py     --filesInput ${outFile}     --outputFile ${outFileIDPVM_truthPt2}     --doExpertPlots  --OnlyTrackingPreInclude --doTechnicalEfficiency  --doDuplicate --validateExtraTrackCollections "SiSPSeedSegmentsActsPixelTrackParticles" --truthMinPt 2000
 
 #
-runIDTPM.py --inputFileNames AOD.acts.pool.${clusterId}.${procId}.root --outputFilePrefix IDTPM.C100_FS --trkAnaCfgFile /afs/cern.ch/user/p/pibutti/sw/condor_helpers/sub_athena/scripts/idtpm/${idtpm_config_file}
+#runIDTPM.py --inputFileNames AOD.acts.pool.${clusterId}.${procId}.root --outputFilePrefix IDTPM.C100_FS.ttbar_pu200_ART --trkAnaCfgFile /afs/cern.ch/user/p/pibutti/sw/condor_helpers/sub_athena/scripts/idtpm/IDTPMconfig_forPFSlim.json
+
+
 
 ## Remove the xAOD
 rm -rf ${outFile}

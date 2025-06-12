@@ -1,0 +1,70 @@
+{
+    "TruthMuons" : {
+        "enabled" : true,
+        "TestType"  : "Offline",
+        "RefType"   : "Truth",
+        "OfflineTrkKey" : "InDetTrackParticles",
+        "MatchingType"  : "TruthMatch",
+        "plotTechnicalEfficiencies" : true,
+        "useActsSiMeasurements" : true,
+        "SelectTruthObject"  : "Muon",
+        "plotDuplicateRates"  : true
+    },
+    "TruthPions" : {
+        "enabled" : true,
+        "TestType"  : "Offline",
+        "RefType"   : "Truth",
+        "OfflineTrkKey" : "InDetTrackParticles",
+        "MatchingType"  : "TruthMatch",
+        "plotTechnicalEfficiencies" : true,
+        "useActsSiMeasurements" : true,
+        "SelectTruthObject"  : "Pion",
+        "plotDuplicateRates"  : true
+    },
+    "TruthPionsPt2" : {
+        "enabled" : true,
+        "TestType"  : "Offline",
+        "RefType"   : "Truth",
+        "OfflineTrkKey" : "InDetTrackParticles",
+        "MatchingType"  : "TruthMatch",
+        "plotTechnicalEfficiencies" : true,
+        "useActsSiMeasurements" : true,
+        "SelectTruthObject"  : "Pion",
+        "truthMinPt"  : 2000.0,
+        "plotDuplicateRates"  : true
+    },
+    "TruthVeryLowPtPions" : {
+        "enabled" : true,
+        "TestType"  : "Offline",
+        "RefType"   : "Truth",
+        "OfflineTrkKey" : "InDetTrackParticles",
+        "MatchingType"  : "TruthMatch",
+        "plotTechnicalEfficiencies" : true,
+        "useActsSiMeasurements" : true,
+        "SelectTruthObject"  : "VeryLowPtPion",
+        "plotDuplicateRates"  : true
+    },
+    "TruthLowPtPions" : {
+        "enabled" : true,
+        "TestType"  : "Offline",
+        "RefType"   : "Truth",
+        "OfflineTrkKey" : "InDetTrackParticles",
+        "MatchingType"  : "TruthMatch",
+        "plotTechnicalEfficiencies" : true,
+        "useActsSiMeasurements" : true,
+        "SelectTruthObject"  : "LowPtPion",
+        "plotDuplicateRates"  : true
+    },
+    "TruthHighPtPions" : {
+        "enabled" : true,
+        "TestType"  : "Offline",
+        "RefType"   : "Truth",
+        "OfflineTrkKey" : "InDetTrackParticles",
+        "MatchingType"  : "TruthMatch",
+        "plotTechnicalEfficiencies" : true,
+        "useActsSiMeasurements" : true,
+        "SelectTruthObject"  : "HighPtPion",
+        "plotDuplicateRates"  : true
+    }
+}
+

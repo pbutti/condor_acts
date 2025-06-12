@@ -35,33 +35,32 @@ cd $OUTDIR
 
 outFile=AOD.acts.pool.${clusterId}.${procId}.root
 outFileIDPVM=idpvm.acts.${clusterId}.${procId}.root
-outFileIDPVM_truthPt2=idpvm.acts.${clusterId}.${procId}.__truthPt2__.root
-idtpm_config_file=IDTPMconfig_forPFSlim_muons.json
+outFileIDPVM_truthPt2=idpvm.acts.${clusterId}.${procId}_truthPt2.root
 
 #### THE JOB  -  SEEDS and TECHNICAL EFFICIENCIES ####
 
 Reco_tf.py \
      --inputRDOFile  ${input_rdo} \
      --outputAODFile ${outFile} \
-     --preInclude "InDetConfig.ConfigurationHelpers.OnlyTrackingPreInclude,ActsConfig.ActsCIFlags.actsWorkflowFlags" \
+     --preInclude "InDetConfig.ConfigurationHelpers.OnlyTrackingPreInclude" \
      --postInclude 'ActsConfig.ActsPostIncludes.ACTSClusterPostInclude' \
      --preExec 'flags.Tracking.doTruth=True;  \
-     flags.Tracking.doStoreTrackSeeds=True; \
-     flags.Tracking.ITkActsPass.storeTrackSeeds=True; \
-     flags.Tracking.doPixelDigitalClustering=False;'\
-     --postExec 'cfg.getEventAlgo("ActsPixelClusterizationAlg").ClusteringTool.UseBroadErrors=True' \
+     	       flags.Tracking.writeExtendedSi_PRDInfo=True; \
+     	       flags.Tracking.doPixelDigitalClustering=True;'\
      --maxEvents ${n_events} \
      --multithreaded 'True'
 
 
+
 ## Follow with IDPVM truthMin 1000
-runIDPVM.py     --filesInput ${outFile}     --outputFile ${outFileIDPVM}     --doExpertPlots  --OnlyTrackingPreInclude --doTechnicalEfficiency  --doDuplicate --validateExtraTrackCollections "SiSPSeedSegmentsActsPixelTrackParticles" 
+#runIDPVM.py     --filesInput ${outFile}     --outputFile ${outFileIDPVM}     --doExpertPlots  --OnlyTrackingPreInclude --doTechnicalEfficiency  --doDuplicate --doTechnicalEfficiency 
 
 ## Follow with IDPVM
-#runIDPVM.py     --filesInput ${outFile}     --outputFile ${outFileIDPVM_truthPt2}     --doExpertPlots  --OnlyTrackingPreInclude --doTechnicalEfficiency  --doDuplicate --validateExtraTrackCollections "SiSPSeedSegmentsActsPixelTrackParticles" --truthMinPt 2000
+#runIDPVM.py     --filesInput ${outFile}     --outputFile ${outFileIDPVM_truthPt2}     --doExpertPlots  --OnlyTrackingPreInclude --doTechnicalEfficiency  --doDuplicate --doTechnicalEfficiency  --truthMinPt 2000
 
-#
-runIDTPM.py --inputFileNames AOD.acts.pool.${clusterId}.${procId}.root --outputFilePrefix IDTPM.C100_FS --trkAnaCfgFile /afs/cern.ch/user/p/pibutti/sw/condor_helpers/sub_athena/scripts/idtpm/${idtpm_config_file}
+##
+#runIDTPM.py --inputFileNames AOD.acts.pool.${clusterId}.${procId}.root --outputFilePrefix IDTPM.C000_FS.ttbar_pu200 --trkAnaCfgFile /afs/cern.ch/user/p/pibutti/sw/condor_helpers/sub_athena/scripts/idtpm/IDTPMconfig_forPF.json
+runIDTPM.py --inputFileNames AOD.acts.pool.${clusterId}.${procId}.root --outputFilePrefix IDTPM.C000_FS.ttbar_pu200_ART --trkAnaCfgFile /afs/cern.ch/user/p/pibutti/sw/condor_helpers/sub_athena/scripts/idtpm/IDTPMconfig_forPFSlim_muons.json
 
 ## Remove the xAOD
 rm -rf ${outFile}

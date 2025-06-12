@@ -1,0 +1,29 @@
+{
+    "TrkAnaEF" : {
+        "enabled" : true,
+        "TestType"  : "Offline",
+        "RefType"   : "Truth",
+        "OfflineTrkKey" : "InDetTrackParticles",
+        "MatchingType"  : "TruthMatch",
+        "doClusterValidation"  : true,
+        "PixelClusterKey"  : "ITkPixelClusters",
+        "StripClusterKey"  : "ITkStripClusters",
+        "PixelSpacePointKey"  : "ITkPixelSpacePoints",
+        "StripSpacePointKey"  : "ITkStripSpacePoints",
+        "StripOverlapSpacePointKey"  : "ITkStripOverlapSpacePoints"
+    },
+    "TrkAnaEF_pT2" : {
+        "enabled" : true,
+        "TestType"  : "Offline",
+        "RefType"   : "Truth",
+        "OfflineTrkKey" : "InDetTrackParticles",
+        "MatchingType"  : "TruthMatch",
+        "doClusterValidation"  : true,
+	"truthMinPt"  : 2000.0,
+        "PixelClusterKey"  : "ITkPixelClusters",
+        "StripClusterKey"  : "ITkStripClusters",
+        "PixelSpacePointKey"  : "ITkPixelSpacePoints",
+        "StripSpacePointKey"  : "ITkStripSpacePoints",
+        "StripOverlapSpacePointKey"  : "ITkStripOverlapSpacePoints"
+    }
+}
