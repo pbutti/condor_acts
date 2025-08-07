@@ -34,10 +34,15 @@ mkdir $OUTDIR
 cd $OUTDIR
 
 outFile=AOD.acts.pool.${clusterId}.${procId}.root
-outFileIDPVM=idpvm.acts.${clusterId}.${procId}.root
+outFileIDPVM=idpvm.acts.${clusterId}.${procId}.__truthPt1__.root
 outFileIDPVM_truthPt2=idpvm.acts.${clusterId}.${procId}.__truthPt2__.root
 
 #### THE JOB  -  SEEDS and TECHNICAL EFFICIENCIES ####
+
+#     --preExec 'flags.Tracking.doTruth=True;  \
+#     flags.Tracking.doStoreTrackSeeds=True; \
+#     flags.Tracking.ITkActsPass.storeTrackSeeds=True; \
+#     flags.Tracking.doPixelDigitalClustering=True;'\
 
 Reco_tf.py \
      --inputRDOFile  ${input_rdo} \
@@ -45,23 +50,25 @@ Reco_tf.py \
      --preInclude "InDetConfig.ConfigurationHelpers.OnlyTrackingPreInclude,ActsConfig.ActsCIFlags.actsWorkflowFlags" \
      --postInclude 'ActsConfig.ActsPostIncludes.ACTSClusterPostInclude' \
      --preExec 'flags.Tracking.doTruth=True;  \
-     flags.Tracking.doStoreTrackSeeds=True; \
-     flags.Tracking.ITkActsPass.storeTrackSeeds=True; \
      flags.Tracking.doPixelDigitalClustering=True;'\
      --maxEvents ${n_events} \
      --multithreaded 'True'
 
 
 ## Follow with IDPVM truthMin 1000
-runIDPVM.py     --filesInput ${outFile}     --outputFile ${outFileIDPVM}     --doExpertPlots  --OnlyTrackingPreInclude --doTechnicalEfficiency  --doDuplicate --validateExtraTrackCollections "SiSPSeedSegmentsActsPixelTrackParticles" 
+runIDPVM.py     --filesInput ${outFile}     --outputFile ${outFileIDPVM}     --doExpertPlots  --OnlyTrackingPreInclude --doTechnicalEfficiency  --doDuplicate #--validateExtraTrackCollections "SiSPSeedSegmentsActsPixelTrackParticles" 
 
 ## Follow with IDPVM
-runIDPVM.py     --filesInput ${outFile}     --outputFile ${outFileIDPVM_truthPt2}     --doExpertPlots  --OnlyTrackingPreInclude --doTechnicalEfficiency  --doDuplicate --validateExtraTrackCollections "SiSPSeedSegmentsActsPixelTrackParticles" --truthMinPt 2000
+runIDPVM.py     --filesInput ${outFile}     --outputFile ${outFileIDPVM_truthPt2}     --doExpertPlots  --OnlyTrackingPreInclude --doTechnicalEfficiency  --doDuplicate --truthMinPt 2000  #--validateExtraTrackCollections "SiSPSeedSegmentsActsPixelTrackParticles" --truthMinPt 2000
 
 #
-#runIDTPM.py --inputFileNames AOD.acts.pool.${clusterId}.${procId}.root --outputFilePrefix IDTPM.C100_FS.ttbar_pu200_ART --trkAnaCfgFile /afs/cern.ch/user/p/pibutti/sw/condor_helpers/sub_athena/scripts/idtpm/IDTPMconfig_forPFSlim.json
+runIDTPM.py --inputFileNames AOD.acts.pool.${clusterId}.${procId}.root --outputFilePrefix IDTPM.C100_FS.ttbar_pu200_ART --trkAnaCfgFile /afs/cern.ch/user/p/pibutti/sw/condor_helpers/sub_athena/scripts/idtpm/IDTPMconfig_forPFSlim.json
 
-
+runIDTPM.py \
+    --inputFileNames AOD.acts.pool.${clusterId}.${procId}.root \
+    --outputFilePrefix IDTPM.C100.ttbar_pu200.${clusterId}.${procId} \
+    --trkAnaCfgFile /eos/project/a/atlas-eftracking/IDTPM_JSONconfigs/EFTrack_ttbar_FS_IDTPMconfig_EFsel.json \
+    --commonTrkAnaFlags OfflineTrkKey=InDetTrackParticles
 
 ## Remove the xAOD
 rm -rf ${outFile}

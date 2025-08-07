@@ -34,8 +34,8 @@ mkdir $OUTDIR
 cd $OUTDIR
 
 outFile=AOD.acts.pool.${clusterId}.${procId}.root
-outFileIDPVM=idpvm.acts.${clusterId}.${procId}.root
-outFileIDPVM_truthPt2=idpvm.acts.${clusterId}.${procId}_truthPt2.root
+outFileIDPVM=idpvm.acts.${clusterId}.${procId}__truthPt1__.root
+outFileIDPVM_truthPt2=idpvm.acts.${clusterId}.${procId}_truthPt2__.root
 
 #### THE JOB  -  SEEDS and TECHNICAL EFFICIENCIES ####
 
@@ -53,15 +53,20 @@ Reco_tf.py \
 
 
 ## Follow with IDPVM truthMin 1000
-runIDPVM.py     --filesInput ${outFile}     --outputFile ${outFileIDPVM}     --doExpertPlots  --OnlyTrackingPreInclude --doTechnicalEfficiency  --doDuplicate --doTechnicalEfficiency 
+runIDPVM.py     --filesInput ${outFile}     --outputFile ${outFileIDPVM}     --doExpertPlots  --OnlyTrackingPreInclude --doTechnicalEfficiency  --doDuplicate #--validateExtraTrackCollections "SiSPSeedSegmentsActsPixelTrackParticles" 
 
 ## Follow with IDPVM
-runIDPVM.py     --filesInput ${outFile}     --outputFile ${outFileIDPVM_truthPt2}     --doExpertPlots  --OnlyTrackingPreInclude --doTechnicalEfficiency  --doDuplicate --doTechnicalEfficiency  --truthMinPt 2000
+runIDPVM.py     --filesInput ${outFile}     --outputFile ${outFileIDPVM_truthPt2}     --doExpertPlots  --OnlyTrackingPreInclude --doTechnicalEfficiency  --doDuplicate --truthMinPt 2000  #--validateExtraTrackCollections "SiSPSeedSegmentsActsPixelTrackParticles" --truthMinPt 2000
 
-##
-#runIDTPM.py --inputFileNames AOD.acts.pool.${clusterId}.${procId}.root --outputFilePrefix IDTPM.C000_FS.ttbar_pu200 --trkAnaCfgFile /afs/cern.ch/user/p/pibutti/sw/condor_helpers/sub_athena/scripts/idtpm/IDTPMconfig_forPF.json
-runIDTPM.py --inputFileNames AOD.acts.pool.${clusterId}.${procId}.root --outputFilePrefix IDTPM.C000_FS.ttbar_pu200 --trkAnaCfgFile /afs/cern.ch/user/p/pibutti/sw/condor_helpers/sub_athena/scripts/idtpm/IDTPMconfig.json
-runIDTPM.py --inputFileNames AOD.acts.pool.${clusterId}.${procId}.root --outputFilePrefix IDTPM.C000_FS.ttbar_pu200_ART --trkAnaCfgFile /afs/cern.ch/user/p/pibutti/sw/condor_helpers/sub_athena/scripts/idtpm/IDTPMconfigART.json
+#
+runIDTPM.py --inputFileNames AOD.acts.pool.${clusterId}.${procId}.root --outputFilePrefix IDTPM.C000_FS.ttbar_pu200_ART --trkAnaCfgFile /afs/cern.ch/user/p/pibutti/sw/condor_helpers/sub_athena/scripts/idtpm/IDTPMconfig_forPFSlim.json
+
+runIDTPM.py \
+    --inputFileNames AOD.acts.pool.${clusterId}.${procId}.root \
+    --outputFilePrefix IDTPM.C000.ttbar_pu200.${clusterId}.${procId} \
+    --trkAnaCfgFile /eos/project/a/atlas-eftracking/IDTPM_JSONconfigs/EFTrack_ttbar_FS_IDTPMconfig_EFsel.json \
+    --commonTrkAnaFlags OfflineTrkKey=InDetTrackParticles
+
 
 ## Remove the xAOD
 rm -rf ${outFile}
