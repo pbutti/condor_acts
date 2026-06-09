@@ -1,0 +1,10 @@
+executable = /data/alice/pbutti/sw/condor_acts/sub_alice_actso2/scripts/actso2_sim_job.sh
+arguments = 10 single_pion $(ClusterId) $(ProcId)
++UseOS = "el9"
++JobCategory = "short"
+log = /data/alice/pbutti/sw/condor_acts/sub_alice_actso2/output_logs/$(ClusterId).$(ProcId)_log.txt
+output = /data/alice/pbutti/sw/condor_acts/sub_alice_actso2/output_logs/$(ClusterId).$(ProcId)_output.txt
+error = /data/alice/pbutti/sw/condor_acts/sub_alice_actso2/output_logs/$(ClusterId).$(ProcId)_error.txt
+request_cpus = 1
+request_memory = 4G
+queue 2
