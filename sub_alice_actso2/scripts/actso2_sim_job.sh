@@ -33,13 +33,14 @@ procId=$4
 
 #run the job
 cd $ACTSO2_DIR
-source setup.sh
+pwd
+source ${ACTSO2_DIR}/setup.sh
 
 skip_events=$((procId * n_events))
 echo "PF::Run on $n_events for $procId skipping first $skip_events events"
 
-OUT_PREFIX=${name}_${n_events}_${procId}_${clusterId}
+OUT_PREFIX=SimOnly_${job_name}_${n_events}_${procId}_${clusterId}
 #mkdir $OUTDIR
 #cd $OUTDIR
 
-python alice3_full_chain.py -n ${n_events} --nThreads 1 --out_dir_prefix ${OUT_PREFIX} --skip ${skip_events}
+python alice3_full_chain.py -n ${n_events} --nThreads 1 --runMode sim_only --out_dir_prefix ${OUT_PREFIX} --skip ${skip_events} 
